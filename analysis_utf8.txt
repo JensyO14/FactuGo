@@ -1,0 +1,100 @@
+﻿Analyzing 2 items...                                            
+
+  error - Classes can only extend other classes - lib\features\invoices\invoice_draft_provider.dart:73:36 - extends_non_class
+warning - The method doesn't override an inherited method - lib\features\invoices\invoice_draft_provider.dart:75:21 - override_on_non_overriding_member
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:80:5 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:80:13 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:84:5 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:84:13 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:90:5 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:90:13 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:96:5 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:96:13 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:100:47 - undefined_identifier
+  error - Undefined name 'ref' - lib\features\invoices\invoice_draft_provider.dart:104:22 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:130:9 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:130:17 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:132:9 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:132:17 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:139:9 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:139:17 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:141:9 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:141:17 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:147:47 - undefined_identifier
+  error - Undefined name 'ref' - lib\features\invoices\invoice_draft_provider.dart:151:22 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:163:7 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:163:15 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:173:47 - undefined_identifier
+  error - Undefined name 'ref' - lib\features\invoices\invoice_draft_provider.dart:177:22 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:189:7 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:189:15 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:191:7 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:191:15 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:199:47 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:202:7 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:202:15 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:209:47 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:211:5 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:211:13 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:215:5 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:215:13 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:219:5 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:223:9 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:226:9 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:227:9 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:227:32 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:228:7 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:228:15 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:234:9 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:235:10 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:235:34 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:236:7 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:236:15 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:243:5 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:243:13 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:247:11 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:248:20 - undefined_identifier
+  error - Undefined name 'ref' - lib\features\invoices\invoice_draft_provider.dart:250:26 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:262:19 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:263:14 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:264:16 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:265:19 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:266:17 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:267:24 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:268:25 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:269:25 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:274:28 - undefined_identifier
+  error - Undefined name 'ref' - lib\features\invoices\invoice_draft_provider.dart:288:24 - undefined_identifier
+  error - Undefined name 'ref' - lib\features\invoices\invoice_draft_provider.dart:289:13 - undefined_identifier
+  error - Undefined name 'ref' - lib\features\invoices\invoice_draft_provider.dart:298:7 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:304:7 - undefined_identifier
+  error - Undefined name 'state' - lib\features\invoices\invoice_draft_provider.dart:304:15 - undefined_identifier
+  error - The function 'AutoDisposeNotifierProvider' isn't defined - lib\features\invoices\invoice_draft_provider.dart:311:5 - undefined_function
+  error - The property 'error' can't be unconditionally accessed because the receiver can be 'null' - lib\features\invoices\invoice_form_screen.dart:20:16 - unchecked_use_of_nullable_value
+  error - The property 'error' can't be unconditionally accessed because the receiver can be 'null' - lib\features\invoices\invoice_form_screen.dart:20:38 - unchecked_use_of_nullable_value
+  error - The getter 'error' isn't defined for the type 'Object' - lib\features\invoices\invoice_form_screen.dart:20:57 - undefined_getter
+  error - The property 'error' can't be unconditionally accessed because the receiver can be 'null' - lib\features\invoices\invoice_form_screen.dart:23:32 - unchecked_use_of_nullable_value
+  error - The getter 'isSaving' isn't defined for the type 'Object' - lib\features\invoices\invoice_form_screen.dart:30:21 - undefined_getter
+  error - The property 'isSaving' can't be unconditionally accessed because the receiver can be 'null' - lib\features\invoices\invoice_form_screen.dart:31:16 - unchecked_use_of_nullable_value
+  error - The property 'items' can't be unconditionally accessed because the receiver can be 'null' - lib\features\invoices\invoice_form_screen.dart:32:16 - unchecked_use_of_nullable_value
+  error - The property 'error' can't be unconditionally accessed because the receiver can be 'null' - lib\features\invoices\invoice_form_screen.dart:33:16 - unchecked_use_of_nullable_value
+
+flutter : 78 issues 
+found. (ran in 2.3s)
+En línea: 1 Carácter: 1
++ flutter analyze lib/feat
+ures/invoices/invoice_form
+_screen.dart lib/fe ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo        
+      : NotSpe    cified: 
+(78 issu    es found. 
+(ran i    n 2.3s):String) 
+    [], RemoteExcept    
+ion
+    + FullyQualified    
+ErrorId : Native    
+CommandError
+ 

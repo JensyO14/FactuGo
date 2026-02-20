@@ -1,0 +1,25 @@
+﻿Analyzing Facturacion movil 1...                                
+
+   info - Unnecessary use of multiple underscores - lib\features\invoices\invoice_detail_screen.dart:94:39 - unnecessary_underscores
+
+flutter : 1 issue 
+found. (ran in 5.5s)
+En línea: 1 
+Carácter: 1
++ flutter analyze 
+2>&1 | Out-File 
+-FilePath 
+analyze_output.txt 
+-Encodin ...
++ 
+~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo   
+           : NotSpe  
+  cified: (1 issue   
+  found. (ran in     
+5.5s):String) []    
+, RemoteExceptio    n
+    + FullyQualified 
+   ErrorId : Native  
+  CommandError
+ 

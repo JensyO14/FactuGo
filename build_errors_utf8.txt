@@ -1,0 +1,196 @@
+﻿Running Gradle task 'assembleDebug'...                          
+flutter : lib/screens
+/main_shell.dart:16:2
+5: Error: Type 'Consu
+merStatefulWidget' 
+not found.
+En línea: 1 
+Carácter: 1
++ flutter build apk 
+--debug > 
+build_errors.txt 2>&1
++ ~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~
+    + CategoryInfo   
+           : NotSpe  
+  cified: (lib/scr   
+ eens/mai...get'     
+not found.:Strin    
+g) [], RemoteExc    
+eption
+    + FullyQualified 
+   ErrorId : Native  
+  CommandError
+ 
+class MainShell 
+extends ConsumerState
+fulWidget {
+                     
+   ^^^^^^^^^^^^^^^^^^
+^^^^
+lib/screens/main_shel
+l.dart:20:3: Error: 
+Type 'ConsumerState' 
+not found.
+  ConsumerState<MainS
+hell> createState() 
+=> _MainShellState();
+  ^^^^^^^^^^^^^
+lib/screens/main_shel
+l.dart:23:31: Error: 
+Type 'ConsumerState' 
+not found.
+class 
+_MainShellState 
+extends ConsumerState
+<MainShell> {
+                     
+         
+^^^^^^^^^^^^^
+lib/main.dart:25:19: 
+Error: The argument 
+type 'MainShell' 
+can't be assigned to 
+the parameter type 
+'Widget?'.
+ - 'MainShell' is 
+from 'package:factura
+cion_movil/screens/ma
+in_shell.dart' ('lib/
+screens/main_shell.da
+rt').
+ - 'Widget' is from '
+package:flutter/src/w
+idgets/framework.dart
+' ('/C:/flutter/packa
+ges/flutter/lib/src/w
+idgets/framework.dart
+').
+      home: const 
+MainShell(),
+                  ^
+lib/screens/main_shel
+l.dart:84:5: Error: 
+The getter 'ref' 
+isn't defined for 
+the type 
+'_MainShellState'.
+ - '_MainShellState' 
+is from 'package:fact
+uracion_movil/screens
+/main_shell.dart' ('l
+ib/screens/main_shell
+.dart').
+Try correcting the 
+name to the name of 
+an existing getter, 
+or defining a getter 
+or field named 'ref'.
+    ref.read(navigati
+onProvider.notifier).
+setIndex(index);
+    ^^^
+lib/screens/main_shel
+l.dart:85:19: Error: 
+The getter 'context' 
+isn't defined for 
+the type 
+'_MainShellState'.
+ - '_MainShellState' 
+is from 'package:fact
+uracion_movil/screens
+/main_shell.dart' ('l
+ib/screens/main_shell
+.dart').
+Try correcting the 
+name to the name of 
+an existing getter, 
+or defining a getter 
+or field named 
+'context'.
+    Navigator.pop(con
+text);
+                  
+^^^^^^^
+lib/screens/main_shel
+l.dart:90:27: Error: 
+The getter 'ref' 
+isn't defined for 
+the type 
+'_MainShellState'.
+ - '_MainShellState' 
+is from 'package:fact
+uracion_movil/screens
+/main_shell.dart' ('l
+ib/screens/main_shell
+.dart').
+Try correcting the 
+name to the name of 
+an existing getter, 
+or defining a getter 
+or field named 'ref'.
+    final 
+selectedIndex = ref.w
+atch(navigationProvid
+er);
+                     
+     ^^^
+lib/screens/main_shel
+l.dart:100:11: 
+Error: The getter 
+'ref' isn't defined 
+for the type 
+'_MainShellState'.
+ - '_MainShellState' 
+is from 'package:fact
+uracion_movil/screens
+/main_shell.dart' ('l
+ib/screens/main_shell
+.dart').
+Try correcting the 
+name to the name of 
+an existing getter, 
+or defining a getter 
+or field named 'ref'.
+          ref.read(na
+vigationProvider.noti
+fier).setIndex(0);
+          ^^^
+Target kernel_snapsho
+t_program failed: 
+Exception
+
+
+FAILURE: Build 
+failed with an 
+exception.
+
+* What went wrong:
+Execution failed for 
+task ':app:compileFlu
+tterBuildDebug'.
+> Process 'command 'C
+:\flutter\bin\flutter
+.bat'' finished with 
+non-zero exit value 1
+
+* Try:
+> Run with 
+--stacktrace option 
+to get the stack 
+trace.
+> Run with --info or 
+--debug option to 
+get more log output.
+> Run with --scan to 
+get full insights.
+> Get more help at ht
+tps://help.gradle.org
+.
+
+BUILD FAILED in 13s
+Running Gradle task 'assembleDebug'...                             14,0s
+Gradle task 
+assembleDebug failed 
+with exit code 1
