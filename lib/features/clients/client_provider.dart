@@ -6,6 +6,9 @@ final _clientRepo = ClientRepository();
 
 /// Lista de clientes (se reconstruye con ref.invalidate).
 final clientsProvider = FutureProvider<List<Client>>((ref) {
+  // Watch the notifier so this provider auto-refreshes
+  // whenever clients are added, edited, or deleted
+  ref.watch(clientNotifierProvider);
   return _clientRepo.getAll();
 });
 
