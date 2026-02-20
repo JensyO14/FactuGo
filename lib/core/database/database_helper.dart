@@ -18,7 +18,7 @@ class DatabaseHelper {
     final path = join(dbPath, filePath);
     return await openDatabase(
       path,
-      version: 2, // Aumentamos versión
+      version: 3, // v3: expense tables
       onCreate: _createDB,
       onUpgrade: _onUpgrade,
       onConfigure: (db) async => db.execute('PRAGMA foreign_keys = ON'),
@@ -46,6 +46,33 @@ class DatabaseHelper {
       await addIfNotExists('require_stock', 'INTEGER DEFAULT 1');
       await addIfNotExists('allow_negative_stock', 'INTEGER DEFAULT 0');
       await addIfNotExists('low_stock_limit', 'INTEGER DEFAULT 5');
+    }
+    if (oldVersion < 3) {
+      await db.execute('''
+CREATE TABLE IF NOT EXISTS expense_categories (
+  id           INTEGER PRIMARY KEY AUTOINCREMENT,
+  name         TEXT NOT NULL,
+  description  TEXT,
+  cloud_id     TEXT,
+  is_deleted   INTEGER NOT NULL DEFAULT 0,
+  created_at   TEXT NOT NULL,
+  updated_at   TEXT NOT NULL
+)''');
+
+      await db.execute('''
+CREATE TABLE IF NOT EXISTS expenses (
+  id                    INTEGER PRIMARY KEY AUTOINCREMENT,
+  expense_category_id   INTEGER NOT NULL,
+  description           TEXT NOT NULL,
+  amount                REAL NOT NULL,
+  date                  TEXT NOT NULL,
+  notes                 TEXT,
+  cloud_id              TEXT,
+  is_deleted            INTEGER NOT NULL DEFAULT 0,
+  created_at            TEXT NOT NULL,
+  updated_at            TEXT NOT NULL,
+  FOREIGN KEY (expense_category_id) REFERENCES expense_categories(id) ON DELETE SET NULL
+)''');
     }
   }
 
@@ -143,6 +170,26 @@ CREATE TABLE invoice_items (
   $syncFields,
   FOREIGN KEY (invoice_id) REFERENCES invoices(id) ON DELETE CASCADE,
   FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE SET NULL
+)''');
+
+    await db.execute('''
+CREATE TABLE expense_categories (
+  id           $id,
+  name         $txt,
+  description  $txtNull,
+  $syncFields
+)''');
+
+    await db.execute('''
+CREATE TABLE expenses (
+  id                    $id,
+  expense_category_id   $integer,
+  description           $txt,
+  amount                $real,
+  date                  $txt,
+  notes                 $txtNull,
+  $syncFields,
+  FOREIGN KEY (expense_category_id) REFERENCES expense_categories(id) ON DELETE SET NULL
 )''');
   }
 

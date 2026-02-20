@@ -7,7 +7,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// 3: Clientes
 /// 4: Productos
 /// 5: Categorías
-/// 6: Mi empresa
+/// 6: Gastos
+/// 7: Mi empresa
 class NavigationNotifier extends Notifier<int> {
   @override
   int build() => 0;

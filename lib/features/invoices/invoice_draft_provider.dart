@@ -25,14 +25,16 @@ class InvoiceDraftState {
   final String? error;
   final BusinessProfile? businessProfile; // Add profile to state
 
-  final String paymentMethod;
+  final String paymentMethod; // 'Contado' | 'Credito'
+  final String paymentType; // 'Efectivo' | 'Tarjeta' | 'Transferencia'
   final double amountTendered;
-  final double discount; // New field
+  final double discount;
 
   const InvoiceDraftState({
     this.client,
     this.items = const [],
     this.paymentMethod = 'Contado',
+    this.paymentType = 'Efectivo',
     this.amountTendered = 0.0,
     this.discount = 0.0,
     this.isSaving = false,
@@ -50,6 +52,7 @@ class InvoiceDraftState {
     Client? client,
     List<InvoiceItemDraft>? items,
     String? paymentMethod,
+    String? paymentType,
     double? amountTendered,
     double? discount,
     bool? isSaving,
@@ -61,6 +64,7 @@ class InvoiceDraftState {
       client: clearClient ? null : (client ?? this.client),
       items: items ?? this.items,
       paymentMethod: paymentMethod ?? this.paymentMethod,
+      paymentType: paymentType ?? this.paymentType,
       amountTendered: amountTendered ?? this.amountTendered,
       discount: discount ?? this.discount,
       isSaving: isSaving ?? this.isSaving,
@@ -78,6 +82,10 @@ class InvoiceDraftNotifier extends Notifier<InvoiceDraftState> {
 
   void setPaymentMethod(String method) {
     state = state.copyWith(paymentMethod: method);
+  }
+
+  void setPaymentType(String type) {
+    state = state.copyWith(paymentType: type);
   }
 
   void setAmountTendered(double amount) {
@@ -264,7 +272,9 @@ class InvoiceDraftNotifier extends Notifier<InvoiceDraftState> {
         total: state.total,
         discount: state.discount,
         status: state.paymentMethod == 'Contado' ? 'pagada' : 'pendiente',
-        paymentMethod: state.paymentMethod,
+        paymentMethod: state.paymentMethod == 'Credito'
+            ? 'Credito'
+            : state.paymentType, // e.g. 'Efectivo', 'Tarjeta', 'Transferencia'
         amountTendered: state.amountTendered,
         changeReturned: state.changeReturned,
         createdAt: now,

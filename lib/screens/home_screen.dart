@@ -6,6 +6,7 @@ import '../core/providers/navigation_provider.dart';
 import '../features/dashboard/dashboard_provider.dart';
 import '../features/dashboard/dashboard_repository.dart';
 import '../features/invoices/invoice.dart';
+import '../features/expenses/expense.dart';
 import 'main_shell.dart';
 
 /// Dashboard — solo el body, sin Scaffold propio.
@@ -23,7 +24,7 @@ class HomeBody extends ConsumerWidget {
             ref.invalidate(dashboardStatsProvider);
             ref.invalidate(weeklySalesProvider);
             ref.invalidate(recentInvoicesProvider);
-            // Wait a bit for UX
+            ref.invalidate(recentExpensesProvider);
             await Future.delayed(const Duration(milliseconds: 500));
           },
           child: SingleChildScrollView(
@@ -39,6 +40,8 @@ class HomeBody extends ConsumerWidget {
                 const _ChartSection(),
                 const SizedBox(height: 24),
                 const _RecentActivitySection(),
+                const SizedBox(height: 24),
+                const _RecentExpensesSection(),
                 const SizedBox(height: 80), // Fab space
               ],
             ),
@@ -110,7 +113,6 @@ class _StatsSection extends ConsumerWidget {
         return LayoutBuilder(
           builder: (context, constraints) {
             final double width = constraints.maxWidth;
-            // 2 items per row
             final double itemWidth = (width - 16) / 2;
 
             return Column(
@@ -140,6 +142,36 @@ class _StatsSection extends ConsumerWidget {
                         icon: Icons.calendar_today,
                         color: AppColors.primary,
                         backgroundColor: AppColors.primaryLight,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    SizedBox(
+                      width: itemWidth,
+                      child: _StatCard(
+                        title: 'Gastos Hoy',
+                        value: NumberFormat.simpleCurrency(
+                          decimalDigits: 0,
+                        ).format(stats.dailyExpenses),
+                        icon: Icons.trending_down,
+                        color: AppColors.error,
+                        backgroundColor: AppColors.errorLight,
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    SizedBox(
+                      width: itemWidth,
+                      child: _StatCard(
+                        title: 'Gastos Mes',
+                        value: NumberFormat.simpleCurrency(
+                          decimalDigits: 0,
+                        ).format(stats.monthlyExpenses),
+                        icon: Icons.account_balance_wallet_outlined,
+                        color: Colors.orange,
+                        backgroundColor: Colors.orange.withAlpha(40),
                       ),
                     ),
                   ],
@@ -458,4 +490,105 @@ class _RecentActivitySection extends ConsumerWidget {
 /// Adaptador: convierte HomeBody en ScreenConfig para MainShell.
 extension HomBodyConfig on HomeBody {
   ScreenConfig toConfig() => ScreenConfig(body: this);
+}
+
+// ─── Recent Expenses Section ─────────────────────────────────────────────────
+
+class _RecentExpensesSection extends ConsumerWidget {
+  const _RecentExpensesSection();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final expensesAsync = ref.watch(recentExpensesProvider);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Gastos Recientes',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w700,
+            color: AppColors.textPrimary,
+          ),
+        ),
+        const SizedBox(height: 12),
+        expensesAsync.when(
+          loading: () => const Center(child: CircularProgressIndicator()),
+          error: (_, __) => const Text('Error al cargar gastos'),
+          data: (expenses) {
+            if (expenses.isEmpty) {
+              return Container(
+                padding: const EdgeInsets.all(20),
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: AppColors.surface,
+                  borderRadius: BorderRadius.circular(AppRadius.md),
+                ),
+                child: const Text(
+                  'No hay gastos recientes',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: AppColors.textHint),
+                ),
+              );
+            }
+            return ListView.separated(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: expenses.length,
+              separatorBuilder: (_, __) => const SizedBox(height: 8),
+              itemBuilder: (context, index) {
+                final expense = expenses[index];
+                return Container(
+                  decoration: BoxDecoration(
+                    color: AppColors.surface,
+                    borderRadius: BorderRadius.circular(AppRadius.md),
+                    border: Border.all(
+                      color: AppColors.inputBorder.withAlpha(50),
+                    ),
+                  ),
+                  child: ListTile(
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 4,
+                    ),
+                    leading: CircleAvatar(
+                      backgroundColor: AppColors.errorLight,
+                      child: Icon(
+                        Icons.trending_down,
+                        color: AppColors.error,
+                        size: 20,
+                      ),
+                    ),
+                    title: Text(
+                      expense.description,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14,
+                      ),
+                    ),
+                    subtitle: Text(
+                      '${expense.categoryName ?? 'Sin categoría'} • ${DateFormat('dd/MM HH:mm').format(expense.date)}',
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: AppColors.textSecondary,
+                      ),
+                    ),
+                    trailing: Text(
+                      '-${NumberFormat.simpleCurrency(decimalDigits: 0).format(expense.amount)}',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 15,
+                        color: AppColors.error,
+                      ),
+                    ),
+                  ),
+                );
+              },
+            );
+          },
+        ),
+      ],
+    );
+  }
 }

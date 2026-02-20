@@ -7,6 +7,7 @@ import '../features/invoices/invoices_screen.dart';
 import '../features/invoices/invoice_form_screen.dart';
 import '../features/products/products_screen.dart';
 import '../features/categories/categories_screen.dart';
+import '../features/expenses/expenses_screen.dart';
 import '../features/business/business_screen.dart';
 import '../core/providers/navigation_provider.dart';
 import 'home_screen.dart';
@@ -63,6 +64,11 @@ class _MainShellState extends ConsumerState<MainShell> {
       buildConfig: (_) => const ScreenConfig(body: CategoriesBodyWidget()),
     ),
     _NavItem(
+      label: 'Gastos',
+      icon: Icons.account_balance_wallet_outlined,
+      buildConfig: (_) => const ScreenConfig(body: ExpensesBodyWidget()),
+    ),
+    _NavItem(
       label: 'Mi empresa',
       icon: Icons.business_outlined,
       buildConfig: (_) => const ScreenConfig(body: BusinessBodyWidget()),
@@ -78,6 +84,7 @@ class _MainShellState extends ConsumerState<MainShell> {
     '', // Clientes
     'CATÁLOGO', // Productos
     '', // Categorías
+    'GASTOS', // Gastos
     'CONFIGURACIÓN', // Mi empresa
   ];
 

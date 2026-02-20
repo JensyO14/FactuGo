@@ -309,6 +309,7 @@ class _CheckoutModalState extends ConsumerState<_CheckoutModal> {
     final draft = ref.watch(invoiceDraftProvider);
     final notifier = ref.read(invoiceDraftProvider.notifier);
     final isSaving = draft.isSaving;
+    final isContado = draft.paymentMethod == 'Contado';
 
     return Container(
       decoration: const BoxDecoration(
@@ -326,12 +327,24 @@ class _CheckoutModalState extends ConsumerState<_CheckoutModal> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(
+            // Handle bar
+            Center(
+              child: Container(
+                width: 40,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: AppColors.inputBorder,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
+            const Text(
               'Confirmar Venta',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 20),
 
             // Total Large
             Center(
@@ -346,28 +359,88 @@ class _CheckoutModalState extends ConsumerState<_CheckoutModal> {
             ),
             const SizedBox(height: 24),
 
-            // Método de Pago
-            SegmentedButton<String>(
-              segments: const [
-                ButtonSegment(
-                  value: 'Contado',
-                  label: Text('Contado'),
-                  icon: Icon(Icons.money),
+            // ── Contado / Crédito ─────────────────────────────────────────
+            Row(
+              children: [
+                Expanded(
+                  child: RadioListTile<String>(
+                    value: 'Contado',
+                    groupValue: draft.paymentMethod,
+                    title: const Text(
+                      'Contado',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    activeColor: AppColors.primary,
+                    contentPadding: EdgeInsets.zero,
+                    onChanged: (val) => notifier.setPaymentMethod(val!),
+                  ),
                 ),
-                ButtonSegment(
-                  value: 'Credito',
-                  label: Text('Crédito'),
-                  icon: Icon(Icons.credit_card),
+                Expanded(
+                  child: RadioListTile<String>(
+                    value: 'Credito',
+                    groupValue: draft.paymentMethod,
+                    title: const Text(
+                      'Crédito',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    activeColor: AppColors.primary,
+                    contentPadding: EdgeInsets.zero,
+                    onChanged: (val) {
+                      notifier.setPaymentMethod(val!);
+                      _amountController.clear();
+                    },
+                  ),
                 ),
               ],
-              selected: {draft.paymentMethod},
-              onSelectionChanged: (Set<String> newSelection) {
-                notifier.setPaymentMethod(newSelection.first);
-              },
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 16),
 
-            // Campo Descuento
+            // ── Tipo de Pago (solo Contado) ───────────────────────────────
+            if (isContado) ...[
+              const Text(
+                'Forma de pago',
+                style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.textSecondary,
+                  letterSpacing: 0.5,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Row(
+                children: [
+                  _PaymentTypeChip(
+                    label: 'Efectivo',
+                    icon: Icons.payments_outlined,
+                    selected: draft.paymentType == 'Efectivo',
+                    onTap: () => notifier.setPaymentType('Efectivo'),
+                  ),
+                  const SizedBox(width: 8),
+                  _PaymentTypeChip(
+                    label: 'Tarjeta',
+                    icon: Icons.credit_card,
+                    selected: draft.paymentType == 'Tarjeta',
+                    onTap: () => notifier.setPaymentType('Tarjeta'),
+                  ),
+                  const SizedBox(width: 8),
+                  _PaymentTypeChip(
+                    label: 'Transfer.',
+                    icon: Icons.account_balance_outlined,
+                    selected: draft.paymentType == 'Transferencia',
+                    onTap: () => notifier.setPaymentType('Transferencia'),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+            ],
+
+            // ── Descuento ─────────────────────────────────────────────────
             TextField(
               keyboardType: const TextInputType.numberWithOptions(
                 decimal: true,
@@ -386,11 +459,11 @@ class _CheckoutModalState extends ConsumerState<_CheckoutModal> {
             ),
             const SizedBox(height: 16),
 
-            // Inputs Contado
-            if (draft.paymentMethod == 'Contado') ...[
+            // ── Monto Recibido + Devuelta (solo Contado + Efectivo) ───────
+            if (isContado && draft.paymentType == 'Efectivo') ...[
               TextField(
                 controller: _amountController,
-                autofocus: true,
+                autofocus: false,
                 keyboardType: const TextInputType.numberWithOptions(
                   decimal: true,
                 ),
@@ -405,7 +478,7 @@ class _CheckoutModalState extends ConsumerState<_CheckoutModal> {
                   notifier.setAmountTendered(amount);
                 },
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 12),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -426,9 +499,11 @@ class _CheckoutModalState extends ConsumerState<_CheckoutModal> {
                 ],
               ),
               const SizedBox(height: 24),
+            ] else ...[
+              const SizedBox(height: 8),
             ],
 
-            // Botón Confirmar
+            // ── Confirmar ─────────────────────────────────────────────────
             SizedBox(
               height: 54,
               child: ElevatedButton(
@@ -437,8 +512,7 @@ class _CheckoutModalState extends ConsumerState<_CheckoutModal> {
                     : () async {
                         await notifier.saveInvoice();
                         if (context.mounted) {
-                          Navigator.pop(context); // Close modal always
-                          // SnackBar handled by listener in body
+                          Navigator.pop(context);
                         }
                       },
                 style: ElevatedButton.styleFrom(
@@ -464,6 +538,62 @@ class _CheckoutModalState extends ConsumerState<_CheckoutModal> {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+// ── Payment Type Chip ──────────────────────────────────────────────────────────
+
+class _PaymentTypeChip extends StatelessWidget {
+  final String label;
+  final IconData icon;
+  final bool selected;
+  final VoidCallback onTap;
+
+  const _PaymentTypeChip({
+    required this.label,
+    required this.icon,
+    required this.selected,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: GestureDetector(
+        onTap: onTap,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 180),
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          decoration: BoxDecoration(
+            color: selected ? AppColors.primary : AppColors.surface,
+            borderRadius: BorderRadius.circular(AppRadius.md),
+            border: Border.all(
+              color: selected ? AppColors.primary : AppColors.inputBorder,
+              width: selected ? 1.5 : 1,
+            ),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                icon,
+                size: 20,
+                color: selected ? Colors.white : AppColors.textSecondary,
+              ),
+              const SizedBox(height: 4),
+              Text(
+                label,
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: selected ? Colors.white : AppColors.textSecondary,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

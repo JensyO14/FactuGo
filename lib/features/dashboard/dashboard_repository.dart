@@ -1,20 +1,24 @@
 import 'package:sqflite/sqflite.dart';
 import '../../core/database/database_helper.dart';
-import '../../core/database/database_helper.dart';
 import '../clients/client.dart';
 import '../invoices/invoice.dart';
+import '../expenses/expense.dart';
 
 class DashboardStats {
   final double dailySales;
   final double monthlySales;
   final int pendingCount;
   final int lowStockCount;
+  final double dailyExpenses;
+  final double monthlyExpenses;
 
   const DashboardStats({
     required this.dailySales,
     required this.monthlySales,
     required this.pendingCount,
     required this.lowStockCount,
+    required this.dailyExpenses,
+    required this.monthlyExpenses,
   });
 }
 
@@ -92,11 +96,41 @@ class DashboardRepository {
       lowStockCount = Sqflite.firstIntValue(stockRes) ?? 0;
     }
 
+    // 5. Daily Expenses & 6. Monthly Expenses
+    double dailyExpenses = 0.0;
+    double monthlyExpenses = 0.0;
+    try {
+      final dailyExpRes = await db.rawQuery(
+        '''
+        SELECT COALESCE(SUM(amount), 0) as total 
+        FROM expenses 
+        WHERE date >= ? AND date <= ? AND is_deleted = 0
+      ''',
+        [startOfDay, endOfDay],
+      );
+      dailyExpenses = (dailyExpRes.first['total'] as num?)?.toDouble() ?? 0.0;
+
+      final monthlyExpRes = await db.rawQuery(
+        '''
+        SELECT COALESCE(SUM(amount), 0) as total 
+        FROM expenses 
+        WHERE date >= ? AND is_deleted = 0
+      ''',
+        [startOfMonth],
+      );
+      monthlyExpenses =
+          (monthlyExpRes.first['total'] as num?)?.toDouble() ?? 0.0;
+    } catch (_) {
+      // Table may not exist yet if migration hasn't run
+    }
+
     return DashboardStats(
       dailySales: dailySales,
       monthlySales: monthlySales,
       pendingCount: pendingCount,
       lowStockCount: lowStockCount,
+      dailyExpenses: dailyExpenses,
+      monthlyExpenses: monthlyExpenses,
     );
   }
 
@@ -191,5 +225,18 @@ class DashboardRepository {
       }
       return invoice;
     }).toList();
+  }
+
+  Future<List<Expense>> getRecentExpenses() async {
+    final db = await _db;
+    final maps = await db.rawQuery('''
+      SELECT e.*, ec.name AS category_name
+      FROM expenses e
+      LEFT JOIN expense_categories ec ON ec.id = e.expense_category_id
+      WHERE e.is_deleted = 0
+      ORDER BY e.date DESC
+      LIMIT 5
+    ''');
+    return maps.map(Expense.fromMap).toList();
   }
 }
